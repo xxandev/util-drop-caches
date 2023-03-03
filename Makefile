@@ -1,5 +1,5 @@
 # project name
-app_name := ihome-knx
+app_name := drop-caches
 
 default: run
 
