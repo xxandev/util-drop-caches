@@ -28,13 +28,14 @@ func init() {
 
 func main() {
 	log.Println("run...")
-	if err := DropCaches(); err != nil {
+	if out, err := DropCaches(); err != nil {
 		log.Fatalln("error:", err)
+	} else {
+		log.Print(string(out))
 	}
-	log.Println("ok.")
+	log.Println("end.")
 }
 
-func DropCaches() error {
-	command := exec.Command("bash", "-c", "sh", "-c", "echo 3 > /proc/sys/vm/drop_caches")
-	return command.Run()
+func DropCaches() ([]byte, error) {
+	return exec.Command("bash", "-c", "sync; echo 3 > /proc/sys/vm/drop_caches && echo drop_caches").Output()
 }
